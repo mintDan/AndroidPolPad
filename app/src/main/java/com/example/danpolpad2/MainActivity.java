@@ -29,11 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView JsoupTxtMain;
 
     private Button TranslateBtn,btnExperiTxt, btnSwitch;
-    private Button msnpolska,redditpolska,businessinsiderpl,elmundo,wikipl,wikies;
+    private Button msnpolska,redditpolska,businessinsiderpl,elmundo,wikipl,wikies,wprost;
+
     private String api = "";// Insert API for google translate here!!!
     ProgressDialog progressDialog;
     private int ScreenState = 1;
-    int translateMethod = 1; //1 for WebScrape, 2 for Google url method hack
+    int translateMethod = 2; //1 for WebScrape, 2 for Google url method hack
     private ScrollWebView browser,browser2;
 
     String urlGet = "";
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Button elmundo = (Button) findViewById(R.id.elmundo);
         Button wikipl = (Button) findViewById(R.id.wikipl);
         Button wikies = (Button) findViewById(R.id.wikies);
+        Button wprost = (Button) findViewById(R.id.Wprost);
 
 
         JsoupTxtMain.setMovementMethod(new ScrollingMovementMethod());
@@ -78,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         String URLWyb = "https://wyborcza.biz/biznes/0,0.html#s=logo_gora";
         String UrlWybTranslateFromWindows2 = "https://wyborcza-biz.translate.goog/biznes/0,0.html?disableRedirects=true&_x_tr_sl=pl&_x_tr_tl=en&_x_tr_hl=da&_x_tr_pto=wapp#s=logo_gora";
+
+
+        String UrlWprost = "https://biznes.wprost.pl/";
+        String UrlWprostTranslated = "";
 
 
         String URLElMundo = "https://www.elmundo.es/espana/2025/07/12/68728076e85ece7e058b45bd.html";
@@ -170,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     //browser2.loadUrl("https://www-msn-com.translate.goog/pl-pl/wiadomosci/nauka-i-technika/rosja-chce-zniszczy%C4%87-satelity-starlink-oto-jak-mo%C5%BCna-tego-dokona%C4%87/ar-AAWhBQk?ocid=EMMX&cvid=6996f72e4f484ce7bb3b4b179ac30da8&_x_tr_sl=pl&_x_tr_tl=en&_x_tr_hl=da&_x_tr_pto=wapp");
                     //So here I need to transform the url, into a google translate url
 
-                    String Url1 = URLcurrent.replace("https://www.msn.com","https://www-msn-com.translate.goog").replace("https://businessinsider.com.pl/","https://businessinsider-com-pl.translate.goog/");
+                    String Url1 = URLcurrent.replace("https://www.msn.com","https://www-msn-com.translate.goog");
 
                     Url1 = Url1.replace("https://www.reddit.com/","https://www-reddit-com.translate.goog/");
                     //String AppendURL = "&_x_tr_sl=pl&_x_tr_tl=en&_x_tr_hl=da&_x_tr_pto=wapp";
@@ -181,7 +187,8 @@ public class MainActivity extends AppCompatActivity {
                     //Her, der tilføjes .m. vidst, måske for mobile? SÅ då det er DESKTOP vs mobile
                     Url1 = Url1.replace("https://es.m.wikipedia.org/","https://es-m-wikipedia-org.translate.goog/");
 
-
+                    Url1 = Url1.replace("https://biznes.wprost.pl/","https://biznes-wprost-pl.translate.goog/");
+                    Url1 = Url1.replace("https://businessinsider.com.pl/","https://businessinsider-com-pl.translate.goog/");
                     String AppendURL = "";
 
                     //AppendURL = "?_x_tr_sl=pl&_x_tr_tl=en&_x_tr_hl=da&_x_tr_pto=wapp";
@@ -279,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sourceLang = "pl";
                 browser.loadUrl(UrlMSNFinanse);
-                translateMethod = 1;
+                translateMethod = 2;
                 if (android.os.Build.VERSION.SDK_INT >= 21) {
                     CookieManager.getInstance().setAcceptThirdPartyCookies(browser, true);
                 } else {
@@ -313,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sourceLang = "pl";
                 browser.loadUrl(UrlBInsider);
-                translateMethod = 1;
+                translateMethod = 2;
                 if (android.os.Build.VERSION.SDK_INT >= 21) {
                     CookieManager.getInstance().setAcceptThirdPartyCookies(browser, true);
                 } else {
@@ -329,6 +336,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 sourceLang = "pl";
                 browser.loadUrl(URLwikipl);
+                translateMethod = 2;
+
+                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                    CookieManager.getInstance().setAcceptThirdPartyCookies(browser, true);
+                } else {
+                    CookieManager.getInstance().setAcceptCookie(true);
+                }
+
+            }
+        });
+
+        wprost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sourceLang = "pl";
+                browser.loadUrl(UrlWprost);
                 translateMethod = 2;
 
                 if (android.os.Build.VERSION.SDK_INT >= 21) {
